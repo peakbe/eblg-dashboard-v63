@@ -422,6 +422,7 @@ async function refresh() {
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
   initMapButtons();
+  loadMetar();
   refresh();
   setInterval(refresh, 60000);
 });
