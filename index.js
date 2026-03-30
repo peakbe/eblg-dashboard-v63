@@ -49,6 +49,32 @@ app.get("/metar", async (req, res) => {
 });
 
 /* ----------------------------------------------------------
+   TAF SÉCURISÉ AVEC FALLBACK
+---------------------------------------------------------- */
+app.get("/taf", async (req, res) => {
+  try {
+    const response = await fetch(`https://avwx.rest/api/taf/EBLG`, {
+      headers: { Authorization: process.env.AVWX_API_KEY }
+    });
+
+    if (!response.ok) throw new Error("AVWX offline");
+
+    const data = await response.json();
+    return res.json(data);
+
+  } catch (error) {
+    console.error("AVWX TAF DOWN → fallback activé");
+
+    return res.json({
+      station: "EBLG",
+      raw: "TAF unavailable",
+      fallback: true,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+/* ----------------------------------------------------------
    DÉMARRAGE DU SERVEUR (MANQUAIT !)
 ---------------------------------------------------------- */
 const PORT = process.env.PORT || 10000;
