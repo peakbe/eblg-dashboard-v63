@@ -2,7 +2,7 @@
 // CONFIGURATION GLOBALE
 // ======================================================
 
-export const PROXY = "https://eblg-proxy.onrender.com";
+export const PROXY = "https://eblg-dashboard-v84.onrender.com";
 
 export const ENDPOINTS = {
     metar: "https://https://eblg-dashboard-v84.onrender.com/metar",
