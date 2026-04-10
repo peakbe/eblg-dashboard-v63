@@ -34,8 +34,15 @@ app.get("/taf", async (req, res) => {
 });
 
 app.get("/fids", async (req, res) => {
-    res.json(await safeFetch("https://opensky-network.org/api/flights/departure?airport=EBLG&begin=NOW-3600&end=NOW"));
+    const now = Math.floor(Date.now() / 1000);
+    const begin = now - 3600;
+
+    const url = `https://opensky-network.org/api/flights/departure?airport=EBLG&begin=${begin}&end=${now}`;
+
+    const data = await safeFetch(url);
+    res.json(data);
 });
+
 
 app.get("/sonos", (req, res) => {
     res.json({ ok: true });
